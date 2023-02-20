@@ -1,0 +1,43 @@
+.footer {
+    background-color: rgb(49, 49, 49);
+    color: lightgray;
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .sections {
+        display: flex;
+        align-items: flex-start;
+        gap: 1.5rem;
+    }
+
+    .section {
+        padding: 20px 0;
+        color: inherit;
+        flex: 1;
+
+        strong {
+            border-bottom: 1px solid rgb(101, 101, 101);
+            display: block;
+            padding-bottom: 10px;
+        }
+        a {
+            display: block;
+            padding: 10px 0;
+        }
+    }
+
+    .rows {
+        margin-top: 30px;
+        padding: 20px 0;
+        border-top: 1px solid rgb(78, 78, 78);
+    }
+
+    .row {
+        color: white;
+        font-weight: bold;
+        text-align: center;
+    }
+}
