@@ -10,7 +10,7 @@ const ProductCard = () => {
             <Link href="/product/1212">
                 <Image
                     className={style.productImage}
-                    src="/products/product.jpg"
+                    src="/products/5.png"
                     alt="an product"
                     width="500"
                     height="800"

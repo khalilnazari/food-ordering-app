@@ -1,10 +1,9 @@
 import React from "react"
-import Image from "next/image"
 import style from "../styles/Product.module.scss"
 import { AiFillStar } from "react-icons/ai"
 import { BiUser } from "react-icons/bi"
 
-const Reviews = ({ userAvatar, reviewNotes, stars }) => {
+const Reviews = () => {
     return (
         <div className={style.reviews}>
             <div className={style.reviewHeader}>

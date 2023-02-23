@@ -1,11 +1,13 @@
-// product card
 .container {
     max-width: 1200px;
     margin: 0 auto;
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 5px;
 }
 
 .products {
-    padding: 2rem 0 4rem 0;
+    // padding: 2rem 0 4rem 0;
     .wrapper {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -13,15 +15,18 @@
     }
 }
 
+// product card
+
 .productCard {
     border: 1px solid lightgray;
     border-radius: 5px;
     padding: 10px;
+    margin-bottom: 1rem;
     flex: 1;
     text-align: center;
     display: flex;
     flex-direction: column;
-    box-shadow: 5px 0 10px rgba(0, 0, 0, 0.238);
+    // box-shadow: 5px 0 10px rgba(0, 0, 0, 0.238);
 
     img {
         border-radius: 5x;
@@ -60,7 +65,6 @@
 
 // productDetail
 .productDetail {
-    padding: 2rem 0 4rem 0;
     .detailWrapper {
         display: flex;
         gap: 1rem;
@@ -142,6 +146,24 @@
     }
 }
 
+// review
+.reviewWrapper {
+    margin-top: 3rem;
+    display: flex;
+    gap: 2rem;
+    div:first-child {
+        flex: 3;
+    }
+
+    div:last-child {
+        flex: 1;
+    }
+
+    h2 {
+        margin-bottom: 1rem;
+    }
+}
+
 .reviews {
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.151);
     padding: 10px;
@@ -160,5 +182,30 @@
         display: flex;
         align-items: center;
         gap: 1rem;
+    }
+}
+
+.suggestedItemsWrapper {
+    border-top: 1px solid lightgray;
+    margin-bottom: 20px;
+    h2 {
+        margin: 20px 0;
+    }
+    .suggestedItems {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+    }
+
+    .button {
+        text-align: center;
+        button {
+            border: 1px solid gray;
+            border-radius: 3px;
+            font-size: 18px;
+            padding: 10px 20px;
+            background-color: transparent;
+            cursor: pointer;
+        }
     }
 }

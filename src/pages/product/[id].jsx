@@ -4,11 +4,20 @@ import style from "../../styles/Product.module.scss"
 import { AiOutlinePlus, AiOutlineMinus, AiFillStar } from "react-icons/ai"
 import ProductImage from "@/components/ProductImage"
 import Reviews from "@/components/Reviews"
+import Head from "next/head"
+import ProductCard from "@/components/ProductCard"
 
 const Product = () => {
     // jsx
     return (
         <>
+            <Head>
+                <title>KD e-commerece</title>
+                <meta name="description" content="Welcome to kd e-commerce web page" />
+                <meta name="viewport" content="width=device-width, initial-scale=1" />
+                <link rel="icon" href="/logo.png" />
+            </Head>
+
             <PageHeader title="Product Detail" />
             <main className={style.productDetail}>
                 <div className={style.container}>
@@ -21,12 +30,6 @@ const Product = () => {
                         <div>
                             <div className={style.detailSection}>
                                 <h1 className={style.productName}>Lorem ipsum dolor sit amet.</h1>
-                                <p className={style.productDescription}>
-                                    Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                                    Temporibus dolor ipsa explicabo at! Fugiat consequuntur officia
-                                    animi tempora ea ipsa, culpa recusandae, odio excepturi
-                                    accusantium quas alias. Reiciendis, laborum itaque?
-                                </p>
                                 <p className={style.productDescription}>
                                     Lorem, ipsum dolor sit amet consectetur adipisicing elit.
                                     Temporibus dolor ipsa explicabo at! Fugiat consequuntur officia
@@ -54,6 +57,9 @@ const Product = () => {
                                     <AiFillStar />
                                     <AiFillStar />
                                 </div>
+                                <p>
+                                    <strong>Shipping form : </strong> Asia
+                                </p>
                             </div>
 
                             {/* size */}
@@ -92,12 +98,34 @@ const Product = () => {
 
                     {/* reviews */}
                     <div className={style.reviewWrapper}>
-                        <Reviews />
-                        <Reviews />
+                        <div>
+                            <h2>Customer review</h2>
+                            <Reviews />
+                            <Reviews />
+                        </div>
+
+                        <div className="sponseredProducts">
+                            <h2>Sponsered Items</h2>
+
+                            <ProductCard />
+                            <ProductCard />
+                        </div>
                     </div>
 
                     {/* Suggested items */}
-                    <div className="suggestedItemsWrapper"></div>
+                    <div className={style.suggestedItemsWrapper}>
+                        <h2>Suggested Items</h2>
+                        <div className={style.suggestedItems}>
+                            <ProductCard />
+                            <ProductCard />
+                            <ProductCard />
+                            <ProductCard />
+                            <ProductCard />
+                        </div>
+                        <div className={style.button}>
+                            <button>Load more</button>
+                        </div>
+                    </div>
                 </div>
             </main>
         </>
