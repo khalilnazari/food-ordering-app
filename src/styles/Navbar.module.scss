@@ -1,34 +1,47 @@
 .header {
-    background-color: #0066ff;
+    background-color: #fafafa;
     padding: 10px 0;
-    .container {
-        max-width: 1200px;
-        margin: 0 auto;
 
+    .container {
+        margin: 0 10px;
         display: flex;
-        justify-content: space-around;
-        align-items: center;
+        justify-content: space-between;
+        align-items: stretch;
+        gap: 10px;
     }
 
     .item {
         flex: 1;
     }
 
+    .item:first-child {
+        display: flex;
+        align-items: center;
+    }
+
     .item:nth-child(2) {
-        flex: 3;
+        display: grid;
+        place-content: center;
+        flex: 2;
+        a {
+            display: grid;
+            place-content: center;
+        }
     }
 
     .item:nth-child(3) {
         display: flex;
+        align-items: center;
         justify-content: flex-end;
     }
 
-    ul {
+    // left nav
+    .leftNav {
         list-style-type: none;
         li {
             display: inline-block;
             margin-right: 10px;
-            color: white;
+            color: #2d2d2d;
         }
 
         a {
@@ -36,33 +49,18 @@
         }
     }
 
-    // contact
-    .contact {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        color: white;
-
-        & > div {
-            font-size: 12px;
-            text-transform: uppercase;
-        }
-
-        .phone {
-            background-color: white;
-            color: #0066ff;
-            border-radius: 50%;
-            height: 30px;
-            width: 30px;
-            padding: 5px;
-            font-size: 12px;
+    // Right nav
+    .rightNav {
+        li {
+            display: inline-block;
+            margin-left: 20px;
         }
     }
 
     // shopping bag
-    .shoppingBag {
+    .shoppingBag,
+    .favItems {
         position: relative;
-        margin-left: 20px;
         span {
             position: absolute;
             top: -5px;
@@ -71,8 +69,8 @@
 
             height: 15px;
             width: 15px;
-            background-color: white;
-            color: red;
+            background-color: rgb(212, 0, 0);
+            color: rgb(224, 224, 224);
             display: flex;
             align-items: center;
             justify-content: center;
