@@ -1,9 +1,10 @@
 .header {
-    background-color: #fafafa;
+    // background-color: #fafafa;
     padding: 10px 0;
 
     .container {
-        margin: 0 10px;
+        max-width: 1600px;
+        margin: 0 auto;
         display: flex;
         justify-content: space-between;
         align-items: stretch;
