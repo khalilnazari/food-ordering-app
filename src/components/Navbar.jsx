@@ -60,9 +60,9 @@ const Navbar = () => {
                                 <span>3</span>
                             </li>
                             <li className={shoppingBag}>
-                                <a href="#">
+                                <Link href="/shopping-card">
                                     <BsBag color="black" size={20} />
-                                </a>
+                                </Link>
                                 <span>8</span>
                             </li>
                             <li className="">

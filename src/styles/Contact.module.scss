@@ -1,0 +1,63 @@
+.contactPage {
+    .container {
+        background-color: #fff;
+        max-width: 1200px;
+        margin: 0 auto 3rem auto;
+        padding: 2rem;
+    }
+
+    .cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 2rem;
+    }
+
+    .card {
+        padding: 2rem;
+        border-radius: 5px;
+        border: 1px solid lightgray;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+
+        p {
+            text-align: center;
+        }
+    }
+
+    .contactForm {
+        margin-top: 3rem;
+        h2 {
+            margin-bottom: 1rem;
+        }
+    }
+
+    .inputControl {
+        margin-bottom: 1rem;
+        input,
+        textarea {
+            padding: 10px 15px;
+            font-size: 16px;
+            display: block;
+            width: 100%;
+            border: 1px solid lightgray;
+            border-radius: 2px;
+        }
+    }
+
+    .buttonControl {
+        margin-bottom: 1rem;
+        display: flex;
+        justify-content: flex-end;
+
+        button {
+            padding: 10px 24px;
+            font-size: 16px;
+            font-weight: bold;
+            border: 1px solid lightgray;
+            border-radius: 2px;
+        }
+    }
+}
