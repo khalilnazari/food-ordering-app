@@ -4,13 +4,13 @@ import Image from "next/image"
 import { BsBagPlusFill } from "react-icons/bs"
 import Link from "next/link"
 
-const ProductCard = () => {
+const ProductCard = ({ data }) => {
     return (
         <div className={style.productCard}>
-            <Link href="/product/1212">
+            <Link href={`/product/${data._id}`}>
                 <Image
                     className={style.productImage}
-                    src="/products/5.png"
+                    src={data.img}
                     alt="an product"
                     width="500"
                     height="800"
@@ -18,12 +18,16 @@ const ProductCard = () => {
                 />
             </Link>
             <div className={style.cardBody}>
-                <p className={style.name}>Blut pink T-Shirt</p>
-                <p className={style.description}>Lorem ipsum dolor sit amet....</p>
+                <p className={style.name}>{data.title}</p>
+                <p className={style.description}>{data.description}</p>
             </div>
 
             <div className={style.cardFooter}>
-                <p className={style.price}>$12.99</p>
+                <p className={style.price}>
+                    {data.prices.map((price) => (
+                        <span> - ${price}</span>
+                    ))}
+                </p>
                 <button>
                     <BsBagPlusFill size={20} />
                 </button>

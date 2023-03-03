@@ -72,6 +72,14 @@
         @media screen and (max-width: 768px) {
             display: block;
         }
+
+        .detailSectionWrapper {
+            flex: 3;
+        }
+
+        .productImages {
+            flex: 1;
+        }
     }
 
     .imageToggler {

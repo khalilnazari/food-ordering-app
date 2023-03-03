@@ -1,5 +1,6 @@
 import PageHeader from "@/components/PageHeader"
 import React from "react"
+import axios from "axios"
 import style from "../../styles/Product.module.scss"
 import { AiOutlinePlus, AiOutlineMinus, AiFillStar } from "react-icons/ai"
 import ProductImage from "@/components/ProductImage"
@@ -7,7 +8,9 @@ import Reviews from "@/components/Reviews"
 import Head from "next/head"
 import ProductCard from "@/components/ProductCard"
 
-const Product = () => {
+const Product = ({ product }) => {
+    console.log(product)
+
     // jsx
     return (
         <>
@@ -22,26 +25,20 @@ const Product = () => {
             <main className={style.productDetail}>
                 <div className={style.container}>
                     <div className={style.detailWrapper}>
-                        {/* iamge */}
-                        <ProductImage />
-                        {/* <div>sd</div> */}
+                        <ProductImage productImage={product.img} />
 
-                        {/* details */}
-                        <div>
+                        <div className={style.detailSectionWrapper}>
                             <div className={style.detailSection}>
-                                <h1 className={style.productName}>Lorem ipsum dolor sit amet.</h1>
-                                <p className={style.productDescription}>
-                                    Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                                    Temporibus dolor ipsa explicabo at! Fugiat consequuntur officia
-                                    animi tempora ea ipsa, culpa recusandae, odio excepturi
-                                    accusantium quas alias. Reiciendis, laborum itaque?
-                                </p>
+                                <h1 className={style.productName}>{product.title}</h1>
+                                <p className={style.productDescription}>{product.description}</p>
                             </div>
 
                             <div className={style.detailSection}>
                                 <p>
                                     <strong>Price : </strong>
-                                    $12.34
+                                    {product.prices.map((price) => (
+                                        <span> - {price}</span>
+                                    ))}
                                 </p>
                                 <p>
                                     <strong>Aavilaiblity</strong> : in stock
@@ -107,8 +104,8 @@ const Product = () => {
                         <div className="sponseredProducts">
                             <h2>Sponsered Items</h2>
 
-                            <ProductCard />
-                            <ProductCard />
+                            {/* <ProductCard /> */}
+                            {/* <ProductCard /> */}
                         </div>
                     </div>
 
@@ -116,11 +113,11 @@ const Product = () => {
                     <div className={style.suggestedItemsWrapper}>
                         <h2>Suggested Items</h2>
                         <div className={style.suggestedItems}>
-                            <ProductCard />
-                            <ProductCard />
-                            <ProductCard />
-                            <ProductCard />
-                            <ProductCard />
+                            {/* <ProductCard /> */}
+                            {/* <ProductCard /> */}
+                            {/* <ProductCard /> */}
+                            {/* <ProductCard /> */}
+                            {/* <ProductCard /> */}
                         </div>
                         <div className={style.button}>
                             <button>Load more</button>
@@ -130,6 +127,15 @@ const Product = () => {
             </main>
         </>
     )
+}
+
+export const getServerSideProps = async ({ params }) => {
+    const res = await axios.get(`http://localhost:3000/api/products/${params.id}`)
+    return {
+        props: {
+            product: res.data
+        }
+    }
 }
 
 export default Product
