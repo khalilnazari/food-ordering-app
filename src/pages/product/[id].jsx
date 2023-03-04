@@ -1,131 +1,115 @@
-import PageHeader from "@/components/PageHeader"
-import React from "react"
+import styles from "../../styles/Product.module.scss"
+import Image from "next/image"
+import { useState } from "react"
 import axios from "axios"
-import style from "../../styles/Product.module.scss"
-import { AiOutlinePlus, AiOutlineMinus, AiFillStar } from "react-icons/ai"
-import ProductImage from "@/components/ProductImage"
-import Reviews from "@/components/Reviews"
-import Head from "next/head"
-import ProductCard from "@/components/ProductCard"
+import { useDispatch } from "react-redux"
+import { addProduct } from "../../../redux/reducers/shoppingCard"
 
-const Product = ({ product }) => {
-    console.log(product)
+const Product = ({ pizza }) => {
+    const [price, setPrice] = useState(pizza.prices[0])
+    const [size, setSize] = useState(0)
+    const [quantity, setQuantity] = useState(1)
+    const [extras, setExtras] = useState([])
+    const dispatch = useDispatch()
 
-    // jsx
+    const changePrice = (number) => {
+        setPrice(price + number)
+    }
+
+    const handleSize = (sizeIndex) => {
+        const difference = pizza.prices[sizeIndex] - pizza.prices[size]
+        setSize(sizeIndex)
+        changePrice(difference)
+    }
+
+    const handleChange = (e, option) => {
+        const checked = e.target.checked
+
+        if (checked) {
+            changePrice(option.price)
+            setExtras((prev) => [...prev, option])
+        } else {
+            changePrice(-option.price)
+            setExtras(extras.filter((extra) => extra._id !== option._id))
+        }
+    }
+
+    const handleClick = () => {
+        dispatch(addProduct({ ...pizza, extras, price, quantity }))
+    }
+
     return (
-        <>
-            <Head>
-                <title>KD e-commerece</title>
-                <meta name="description" content="Welcome to kd e-commerce web page" />
-                <meta name="viewport" content="width=device-width, initial-scale=1" />
-                <link rel="icon" href="/logo.png" />
-            </Head>
-
-            <PageHeader title="Product Detail" />
-            <main className={style.productDetail}>
-                <div className={style.container}>
-                    <div className={style.detailWrapper}>
-                        <ProductImage productImage={product.img} />
-
-                        <div className={style.detailSectionWrapper}>
-                            <div className={style.detailSection}>
-                                <h1 className={style.productName}>{product.title}</h1>
-                                <p className={style.productDescription}>{product.description}</p>
-                            </div>
-
-                            <div className={style.detailSection}>
-                                <p>
-                                    <strong>Price : </strong>
-                                    {product.prices.map((price) => (
-                                        <span> - {price}</span>
-                                    ))}
-                                </p>
-                                <p>
-                                    <strong>Aavilaiblity</strong> : in stock
-                                </p>
-                                <p>
-                                    <strong>Sold</strong> : 5k
-                                </p>
-                                <div>
-                                    <strong>Review : </strong>
-                                    <AiFillStar />
-                                    <AiFillStar />
-                                    <AiFillStar />
-                                    <AiFillStar />
-                                    <AiFillStar />
-                                </div>
-                                <p>
-                                    <strong>Shipping form : </strong> Asia
-                                </p>
-                            </div>
-
-                            {/* size */}
-                            <div className={style.detailSection}>
-                                <h4>Choose sizes</h4>
-                                <div className={style.sizes}>
-                                    <button className="box">S</button>
-                                    <button className="box">M</button>
-                                    <button className="box">L</button>
-                                    <button className="box">XL</button>
-                                </div>
-                            </div>
-
-                            {/* quantity */}
-                            <div className={style.detailSection}>
-                                <h4>Quantity</h4>
-                                <div className={style.count}>
-                                    <button className="box">
-                                        <AiOutlineMinus />
-                                    </button>
-                                    <span>0</span>
-                                    <button className="box">
-                                        <AiOutlinePlus />
-                                    </button>
-                                </div>
-                            </div>
-                            <div className={style.detailSection}>
-                                <div className={style.actionBtn}>
-                                    <button>Add to Cart</button>
-                                    <button>Add to Wishlist</button>
-                                    <button>Buy it Now</button>
-                                </div>
-                            </div>
-                        </div>
+        <div className={styles.container}>
+            <div className={styles.left}>
+                <div className={styles.imgContainer}>
+                    <Image src={pizza.img} objectFit="contain" layout="fill" alt="" />
+                </div>
+            </div>
+            <div className={styles.right}>
+                <h1 className={styles.title}>{pizza.title}</h1>
+                <span className={styles.price}>${price}</span>
+                <p className={styles.desc}>{pizza.desc}</p>
+                <h3 className={styles.choose}>Choose the size</h3>
+                <div className={styles.sizes}>
+                    <div className={styles.size} onClick={() => handleSize(0)}>
+                        <Image
+                            src="/pizza-size.png"
+                            width={50}
+                            height={50}
+                            objectFit="cover"
+                            alt=""
+                        />
+                        <span className={styles.number}>Small</span>
                     </div>
-
-                    {/* reviews */}
-                    <div className={style.reviewWrapper}>
-                        <div>
-                            <h2>Customer review</h2>
-                            <Reviews />
-                            <Reviews />
-                        </div>
-
-                        <div className="sponseredProducts">
-                            <h2>Sponsered Items</h2>
-
-                            {/* <ProductCard /> */}
-                            {/* <ProductCard /> */}
-                        </div>
+                    <div className={styles.size} onClick={() => handleSize(1)}>
+                        <Image
+                            src="/pizza-size.png"
+                            width={50}
+                            height={50}
+                            objectFit="cover"
+                            alt=""
+                        />
+                        <span className={styles.number}>Medium</span>
                     </div>
-
-                    {/* Suggested items */}
-                    <div className={style.suggestedItemsWrapper}>
-                        <h2>Suggested Items</h2>
-                        <div className={style.suggestedItems}>
-                            {/* <ProductCard /> */}
-                            {/* <ProductCard /> */}
-                            {/* <ProductCard /> */}
-                            {/* <ProductCard /> */}
-                            {/* <ProductCard /> */}
-                        </div>
-                        <div className={style.button}>
-                            <button>Load more</button>
-                        </div>
+                    <div className={styles.size} onClick={() => handleSize(2)}>
+                        <Image
+                            src="/pizza-size.png"
+                            width={50}
+                            height={50}
+                            objectFit="cover"
+                            alt=""
+                        />
+                        <span className={styles.number}>Large</span>
                     </div>
                 </div>
-            </main>
-        </>
+                <h3 className={styles.choose}>Choose additional ingredients</h3>
+                <div className={styles.ingredients}>
+                    {pizza.extraOptions.map((option) => (
+                        <div className={styles.option} key={option._id}>
+                            <input
+                                type="checkbox"
+                                id={option.text}
+                                name={option.text}
+                                className={styles.checkbox}
+                                onChange={(e) => handleChange(e, option)}
+                            />
+                            <label htmlFor="double">{option.text}</label>
+                        </div>
+                    ))}
+                </div>
+                <div className={styles.add}>
+                    <input
+                        onChange={(e) => setQuantity(e.target.value)}
+                        type="number"
+                        defaultValue={1}
+                        className={styles.quantity}
+                    />
+                    <button className={styles.button} onClick={handleClick}>
+                        Add to Cart
+                    </button>
+                </div>
+            </div>
+        </div>
     )
 }
 
@@ -133,7 +117,7 @@ export const getServerSideProps = async ({ params }) => {
     const res = await axios.get(`http://localhost:3000/api/products/${params.id}`)
     return {
         props: {
-            product: res.data
+            pizza: res.data
         }
     }
 }

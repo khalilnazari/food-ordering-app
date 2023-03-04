@@ -13,8 +13,12 @@ import {
 import { BsBag, BsHeart, BsSearch } from "react-icons/bs"
 import { BiUser } from "react-icons/bi"
 import Link from "next/link"
+import { useSelector } from "react-redux"
 
 const Navbar = () => {
+    const quantity = useSelector((state) => state.shoppingBag.quantity)
+    console.log(quantity)
+
     return (
         <>
             <header className={header}>
@@ -63,7 +67,7 @@ const Navbar = () => {
                                 <Link href="/shopping-card">
                                     <BsBag color="black" size={20} />
                                 </Link>
-                                <span>8</span>
+                                <span>{quantity}</span>
                             </li>
                             <li className="">
                                 <a href="#">

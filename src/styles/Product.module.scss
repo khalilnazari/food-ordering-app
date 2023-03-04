@@ -1,219 +1,140 @@
 .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    background-color: #fff;
-    padding: 10px;
-    border-radius: 5px;
+    height: calc(100vh - 100px);
+    display: flex;
 }
 
-.products {
-    // padding: 2rem 0 4rem 0;
-    .wrapper {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 1rem;
-    }
-}
-
-// product card
-
-.productCard {
-    border: 1px solid lightgray;
-    border-radius: 5px;
-    padding: 10px;
-    margin-bottom: 1rem;
+.left {
     flex: 1;
-    text-align: center;
+    height: 100%;
     display: flex;
-    flex-direction: column;
-    // box-shadow: 5px 0 10px rgba(0, 0, 0, 0.238);
-
-    img {
-        border-radius: 5x;
-        object-fit: cover;
-    }
-
-    .cardBody {
-        text-align: left;
-        padding: 15px 10px;
-        .name {
-            // font-weight: bold;
-            font-size: 18px;
-        }
-        .description {
-            font-size: 16px;
-            // font-weight: normal;
-        }
-    }
-    .cardFooter {
-        padding: 15px 10px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        .price {
-            // font-weight: bold;
-            color: rgb(255, 98, 0);
-        }
-
-        button {
-            cursor: pointer;
-            border: none;
-            background-color: transparent;
-        }
-    }
+    align-items: center;
+    justify-content: center;
 }
 
-// productDetail
-.productDetail {
-    .detailWrapper {
-        display: flex;
-        gap: 1rem;
-
-        @media screen and (max-width: 768px) {
-            display: block;
-        }
-
-        .detailSectionWrapper {
-            flex: 3;
-        }
-
-        .productImages {
-            flex: 1;
-        }
-    }
-
-    .imageToggler {
-        display: flex;
-        gap: 5px;
-
-        img {
-            cursor: pointer;
-        }
-    }
-
-    .productName {
-        // font-weight: 400;
-        font-size: 28px;
-        margin-bottom: 10px;
-    }
-
-    .productDescription {
-        // font-weight: normal;
-        font-size: 14px;
-        margin-bottom: 10px;
-    }
-
-    .detailSection {
-        margin-bottom: 20px;
-
-        h4 {
-            margin-bottom: 5px;
-        }
-    }
-    .sizes,
-    .count {
-        display: flex;
-        gap: 5px;
-        button {
-            border: 1px solid black;
-            background: transparent;
-            width: 30px;
-            height: 30px;
-            cursor: pointer;
-            border-radius: 3px;
-        }
-    }
-
-    .count {
-        gap: 15px;
-        button {
-            width: 40px;
-            display: grid;
-            place-content: center;
-            border-radius: 3px;
-        }
-    }
-
-    .actionBtn {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-        button {
-            border: 1px solid black;
-            background-color: transparent;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: 0.3s ease-in-out;
-
-            &:hover {
-                background: rgb(0, 0, 0);
-                color: white;
-            }
-        }
-    }
+.right {
+    flex: 1;
+    padding: 20px;
 }
 
-// review
-.reviewWrapper {
-    margin-top: 3rem;
+.imgContainer {
+    width: 80%;
+    height: 80%;
+    position: relative;
+}
+
+.price {
+    color: #d1411e;
+    font-size: 24px;
+    font-weight: 400;
+    border-bottom: 1px solid #d1411e;
+}
+
+.sizes {
+    width: 40%;
     display: flex;
-    gap: 2rem;
-    div:first-child {
-        flex: 3;
-    }
-
-    div:last-child {
-        flex: 1;
-    }
-
-    h2 {
-        margin-bottom: 1rem;
-    }
+    justify-content: space-between;
 }
 
-.reviews {
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.151);
-    padding: 10px;
-    border-radius: 5px;
-    margin-bottom: 15px;
-
-    .reviewHeader {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        border-bottom: 1px solid #ddd;
-        padding-bottom: 10px;
-        margin-bottom: 10px;
-    }
-    .userInfo {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-    }
+.size {
+    width: 30px;
+    height: 30px;
+    position: relative;
+    cursor: pointer;
 }
 
-.suggestedItemsWrapper {
-    border-top: 1px solid lightgray;
-    margin-bottom: 20px;
-    h2 {
-        margin: 20px 0;
-    }
-    .suggestedItems {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 1rem;
-    }
+.size:nth-child(2) {
+    width: 40px;
+    height: 40px;
+}
 
-    .button {
+.size:last-child {
+    width: 50px;
+    height: 50px;
+}
+
+.number {
+    position: absolute;
+    top: -5px;
+    right: -20px;
+    background-color: teal;
+    color: white;
+    font-size: 12px;
+    padding: 0 5px;
+    border-radius: 10px;
+}
+
+.ingredients {
+    display: flex;
+    margin-bottom: 30px;
+}
+
+.option {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.checkbox {
+    width: 20px;
+    height: 20px;
+}
+
+.quantity {
+    width: 50px;
+    height: 30px;
+}
+
+.button {
+    height: 30px;
+    margin-left: 10px;
+    background-color: #d1411e;
+    color: white;
+    border: none;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 480px) {
+    .container {
+        height: auto;
         text-align: center;
-        button {
-            border: 1px solid gray;
-            border-radius: 3px;
-            font-size: 18px;
-            padding: 10px 20px;
-            background-color: transparent;
-            cursor: pointer;
-        }
+        flex-direction: column;
+        margin-top: 20px;
+    }
+
+    .imgContainer {
+        width: 70vw;
+        height: 70vw;
+    }
+
+    .title {
+        margin: 5px;
+    }
+
+    .sizes {
+        width: 100%;
+        padding: 0px 20px;
+    }
+
+    .ingredients {
+        flex-direction: column;
+    }
+
+    .option {
+        margin: 10px;
+        font-size: 18px;
+    }
+
+    .checkbox {
+        width: 25px;
+        height: 25px;
+    }
+
+    .quantity,
+    .button {
+        height: 50px;
+        padding: 10px 20px;
     }
 }

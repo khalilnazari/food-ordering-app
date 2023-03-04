@@ -1,88 +1,191 @@
-import React from "react"
-import style from "../styles/ShoppingCard.module.scss"
+"use client"
+
+import React, { useEffect, useState } from "react"
 import Image from "next/image"
-import { BiTrash } from "react-icons/bi"
-import PageHeader from "@/components/PageHeader"
-
-const Card = () => (
-    <div className={style.card}>
-        <div>
-            <Image
-                src="/products/5.png"
-                width={100}
-                height={100}
-                layout="responsive"
-                objectFit="cover"
-            />
-        </div>
-        <div>
-            <h3>Product title</h3>
-            <p>Description.... I amy not needed...</p>
-            <p>
-                <strong>Size: </strong>
-                <span>L</span>
-            </p>
-            <p>
-                <strong>Quantity: </strong>
-                <span>4</span>
-            </p>
-            <p>
-                <strong>Price: </strong>
-                <span>$12.90</span>
-            </p>
-
-            <button className={style.deleteBtn}>
-                <BiTrash size={25} />
-            </button>
-        </div>
-    </div>
-)
+import { useDispatch, useSelector } from "react-redux"
+import axios from "axios"
+import { useRouter } from "next/router"
+import styles from "../styles/ShoppingCard.module.scss"
+import {
+    PayPalScriptProvider,
+    PayPalButtons,
+    usePayPalScriptReducer
+} from "@paypal/react-paypal-js"
+import { reset } from "../../redux/reducers/shoppingCard"
+import OrderDetail from "../components/OrderDetail"
 
 const ShoppingCard = () => {
+    const cart = useSelector((state) => state.shoppingBag)
+
+    const [open, setOpen] = useState(false)
+    const [cash, setCash] = useState(false)
+    const amount = cart.total
+    const currency = "USD"
+    const style = { layout: "vertical" }
+    const dispatch = useDispatch()
+    const router = useRouter()
+
+    const createOrder = async (data) => {
+        try {
+            const res = await axios.post("http://localhost:3000/api/orders", data)
+            if (res.status === 201) {
+                dispatch(reset())
+                router.push(`/orders/${res.data._id}`)
+            }
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
+    // Custom component to wrap the PayPalButtons and handle currency changes
+    const ButtonWrapper = ({ currency, showSpinner }) => {
+        // usePayPalScriptReducer can be use only inside children of PayPalScriptProviders
+        // This is the main reason to wrap the PayPalButtons in a new component
+        const [{ options, isPending }, dispatch] = usePayPalScriptReducer()
+
+        useEffect(() => {
+            dispatch({
+                type: "resetOptions",
+                value: {
+                    ...options,
+                    currency: currency
+                }
+            })
+        }, [currency, showSpinner])
+
+        return (
+            <>
+                {showSpinner && isPending && <div className="spinner" />}
+                <PayPalButtons
+                    style={style}
+                    disabled={false}
+                    forceReRender={[amount, currency, style]}
+                    fundingSource={undefined}
+                    createOrder={(data, actions) => {
+                        return actions.order
+                            .create({
+                                purchase_units: [
+                                    {
+                                        amount: {
+                                            currency_code: currency,
+                                            value: amount
+                                        }
+                                    }
+                                ]
+                            })
+                            .then((orderId) => {
+                                // Your code here after create the order
+                                return orderId
+                            })
+                    }}
+                    onApprove={function (data, actions) {
+                        return actions.order.capture().then(function (details) {
+                            const shipping = details.purchase_units[0].shipping
+                            createOrder({
+                                customer: shipping.name.full_name,
+                                address: shipping.address.address_line_1,
+                                total: cart.total,
+                                method: 1
+                            })
+                        })
+                    }}
+                />
+            </>
+        )
+    }
+
     return (
-        <>
-            <PageHeader title="Shopping Bag" />
-            <main className={style.shoppingCard}>
-                <div className={style.container}>
-                    <div className={style.shoppingInfo}>
-                        <div className={style.cardsWrapper}>
-                            <Card />
-                            <Card />
-                            <Card />
-                            <Card />
-                        </div>
-
-                        {/* checkout */}
-                        <div className={style.checkout}>
-                            <div className={style.addressInfo}>
-                                <strong>Delivery Adress : </strong>
-                                <span>
-                                    241, Petronas Twin Tower, Kuala Lumpur City Centre, 50088 Kuala
-                                    Lumpur, Wilayah Persekutuan Kuala Lumpur
-                                </span>
-                            </div>
-                            <div className={style.checkoutInfo}>
-                                <h3>Shopping Summary</h3>
-                                <div>
-                                    <strong>Total products: </strong>
-                                    <span>3</span>
-                                </div>
-                                <div>
-                                    <strong>Total Price: </strong>
-                                    <span>$300.23</span>
-                                </div>
-                                <div>
-                                    <strong>Tax: </strong>
-                                    <span>$0</span>
-                                </div>
-
-                                <button className={style.checkoutBtn}>Proceed Checkout</button>
-                            </div>
-                        </div>
+        <div className={styles.container}>
+            <div className={styles.left}>
+                <table className={styles.table}>
+                    <tbody>
+                        <tr className={styles.trTitle}>
+                            <th>Product</th>
+                            <th>Name</th>
+                            <th>Extras</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Total</th>
+                        </tr>
+                    </tbody>
+                    <tbody>
+                        {cart.products.map((product) => (
+                            <tr className={styles.tr} key={product._id}>
+                                <td>
+                                    <div className={styles.imgContainer}>
+                                        <Image
+                                            src={product.img}
+                                            width={300}
+                                            height={300}
+                                            objectFit="cover"
+                                            alt=""
+                                        />
+                                    </div>
+                                </td>
+                                <td>
+                                    <span className={styles.name}>{product.title}</span>
+                                </td>
+                                <td>
+                                    <span className={styles.extras}>
+                                        {product.extras.map((extra) => (
+                                            <span key={extra._id}>{extra.text}, </span>
+                                        ))}
+                                    </span>
+                                </td>
+                                <td>
+                                    <span className={styles.price}>${product.price}</span>
+                                </td>
+                                <td>
+                                    <span className={styles.quantity}>{product.quantity}</span>
+                                </td>
+                                <td>
+                                    <span className={styles.total}>
+                                        ${product.price * product.quantity}
+                                    </span>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+            <div className={styles.right}>
+                <div className={styles.wrapper}>
+                    <h2 className={styles.title}>CART TOTAL</h2>
+                    <div className={styles.totalText}>
+                        <b className={styles.totalTextTitle}>Subtotal:</b>${cart.total}
                     </div>
+                    <div className={styles.totalText}>
+                        <b className={styles.totalTextTitle}>Discount:</b>$0.00
+                    </div>
+                    <div className={styles.totalText}>
+                        <b className={styles.totalTextTitle}>Total:</b>${cart.total}
+                    </div>
+                    {open ? (
+                        <div className={styles.paymentMethods}>
+                            <button className={styles.payButton} onClick={() => setCash(true)}>
+                                CASH ON DELIVERY
+                            </button>
+                            <PayPalScriptProvider
+                                options={{
+                                    "client-id":
+                                        "ATTL8fDJKfGzXNH4VVuDy1qW4_Jm8S0sqmnUTeYtWpqxUJLnXIn90V8YIGDg-SNPaB70Hg4mko_fde4-",
+                                    components: "buttons",
+                                    currency: "USD",
+                                    "disable-funding": "credit,card,p24"
+                                }}
+                            >
+                                <ButtonWrapper currency={currency} showSpinner={false} />
+                            </PayPalScriptProvider>
+                        </div>
+                    ) : (
+                        <button onClick={() => setOpen(true)} className={styles.button}>
+                            CHECKOUT NOW!
+                        </button>
+                    )}
                 </div>
-            </main>
-        </>
+            </div>
+            {cash && <OrderDetail total={cart.total} createOrder={createOrder} />}
+        </div>
     )
 }
 

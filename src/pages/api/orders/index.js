@@ -1,24 +1,27 @@
 import dbConnect from "../../../../lib/mongodb"
 import Order from "../../../../model/Order"
 
-export default async function handler(req, res) {
-    dbConnect()
+const handler = async (req, res) => {
+    const { method } = req
 
-    const { method, body } = req
+    await dbConnect()
 
-    // Get all orders.
     if (method === "GET") {
         try {
-        } catch (error) {
-            res.status(500).json(error)
+            const orders = await Order.find()
+            res.status(200).json(orders)
+        } catch (err) {
+            res.status(500).json(err)
         }
     }
-
-    // Create new order
     if (method === "POST") {
         try {
-        } catch (error) {
-            res.status(500).json(error)
+            const order = await Order.create(req.body)
+            res.status(201).json(order)
+        } catch (err) {
+            res.status(500).json(err)
         }
     }
 }
+
+export default handler

@@ -1,33 +1,34 @@
 import dbConnect from "../../../../lib/mongodb"
 import Order from "../../../../model/Order"
 
-export default async function handler(req, res) {
-    dbConnect()
+const handler = async (req, res) => {
+    const {
+        method,
+        query: { id }
+    } = req
 
-    const { method, query } = req
-    const { id } = query
+    await dbConnect()
 
-    // Delete order.
-    if (method === "DELETE") {
-        try {
-        } catch (error) {
-            res.status(500).json(error)
-        }
-    }
-
-    // Update order.
-    if (method === "PUT") {
-        try {
-        } catch (error) {
-            res.status(500).json(error)
-        }
-    }
-
-    // Get one order.
     if (method === "GET") {
         try {
-        } catch (error) {
-            res.status(500).json(error)
+            const order = await Order.findById(id)
+            res.status(200).json(order)
+        } catch (err) {
+            res.status(500).json(err)
         }
     }
+    if (method === "PUT") {
+        try {
+            const order = await Order.findByIdAndUpdate(id, req.body, {
+                new: true
+            })
+            res.status(200).json(order)
+        } catch (err) {
+            res.status(500).json(err)
+        }
+    }
+    if (method === "DELETE") {
+    }
 }
+
+export default handler

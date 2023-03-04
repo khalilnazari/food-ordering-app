@@ -1,10 +1,19 @@
+"use client"
+
 import React from "react"
 import style from "../styles/Product.module.scss"
 import Image from "next/image"
 import { BsBagPlusFill } from "react-icons/bs"
 import Link from "next/link"
+import { useDispatch } from "react-redux"
+import { addToCard } from "../../redux/reducers/shoppingCard"
 
 const ProductCard = ({ data }) => {
+    const dispatch = useDispatch()
+    const addItemToCard = () => {
+        dispatch(addToCard(data))
+    }
+
     return (
         <div className={style.productCard}>
             <Link href={`/product/${data._id}`}>
@@ -23,12 +32,8 @@ const ProductCard = ({ data }) => {
             </div>
 
             <div className={style.cardFooter}>
-                <p className={style.price}>
-                    {data.prices.map((price) => (
-                        <span> - ${price}</span>
-                    ))}
-                </p>
-                <button>
+                <p className={style.price}>{data.price}</p>
+                <button onClick={addItemToCard}>
                     <BsBagPlusFill size={20} />
                 </button>
             </div>

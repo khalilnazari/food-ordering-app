@@ -5,12 +5,12 @@ const ProductSchema = new mongoose.Schema(
         title: {
             type: String,
             required: true,
-            maxlength: 100
+            maxlength: 60
         },
-        description: {
+        desc: {
             type: String,
             required: true,
-            maxlength: 500
+            maxlength: 200
         },
         img: {
             type: String,
@@ -19,9 +19,17 @@ const ProductSchema = new mongoose.Schema(
         prices: {
             type: [Number],
             required: true
+        },
+        extraOptions: {
+            type: [
+                {
+                    text: { type: String, required: true },
+                    price: { type: Number, required: true }
+                }
+            ]
         }
     },
-
     { timestamps: true }
 )
+
 export default mongoose.models.Product || mongoose.model("Product", ProductSchema)
