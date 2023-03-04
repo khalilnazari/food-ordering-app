@@ -118,7 +118,8 @@ const ShoppingCard = () => {
                                             width={300}
                                             height={300}
                                             objectFit="cover"
-                                            alt=""
+                                            layout="responsive"
+                                            alt="cart item"
                                         />
                                     </div>
                                 </td>
