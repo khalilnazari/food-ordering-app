@@ -1,6 +1,9 @@
 import styles from "../../styles/Order.module.scss"
 import Image from "next/image"
 import axios from "axios"
+import { RiMoneyDollarCircleFill, RiEBike2Line, RiHomeSmileFill } from "react-icons/ri"
+import { GiCook } from "react-icons/gi"
+import { BsFillCheckCircleFill } from "react-icons/bs"
 
 const Order = ({ order }) => {
     const status = order.status
@@ -39,54 +42,42 @@ const Order = ({ order }) => {
                 </div>
                 <div className={styles.row}>
                     <div className={statusClass(0)}>
-                        <Image src="/img/paid.png" width={30} height={30} alt="" />
+                        <RiMoneyDollarCircleFill size={50} color="#8400ff" />
                         <span>Payment</span>
                         <div className={styles.checkedIcon}>
-                            <Image
-                                className={styles.checkedIcon}
-                                src="/img/checked.png"
-                                width={20}
-                                height={20}
-                                alt=""
-                            />
+                            <BsFillCheckCircleFill size={25} color="green" />
                         </div>
                     </div>
                     <div className={statusClass(1)}>
-                        <Image src="/img/bake.png" width={30} height={30} alt="" />
+                        <GiCook size={50} color="#ff9200" />
                         <span>Preparing</span>
                         <div className={styles.checkedIcon}>
-                            <Image
+                            <BsFillCheckCircleFill
+                                size={25}
+                                color="green"
                                 className={styles.checkedIcon}
-                                src="/img/checked.png"
-                                width={20}
-                                height={20}
-                                alt=""
                             />
                         </div>
                     </div>
                     <div className={statusClass(2)}>
-                        <Image src="/img/bike.png" width={30} height={30} alt="" />
+                        <RiEBike2Line size={50} color="black" />
                         <span>On the way</span>
                         <div className={styles.checkedIcon}>
-                            <Image
+                            <BsFillCheckCircleFill
+                                size={25}
+                                color="green"
                                 className={styles.checkedIcon}
-                                src="/img/checked.png"
-                                width={20}
-                                height={20}
-                                alt=""
                             />
                         </div>
                     </div>
                     <div className={statusClass(3)}>
-                        <Image src="/img/delivered.png" width={30} height={30} alt="" />
+                        <RiHomeSmileFill size={50} color="#3b474f" />
                         <span>Delivered</span>
                         <div className={styles.checkedIcon}>
-                            <Image
+                            <BsFillCheckCircleFill
+                                size={25}
+                                color="green"
                                 className={styles.checkedIcon}
-                                src="/img/checked.png"
-                                width={20}
-                                height={20}
-                                alt=""
                             />
                         </div>
                     </div>

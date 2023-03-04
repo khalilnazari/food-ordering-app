@@ -51,18 +51,6 @@ const Navbar = () => {
                     {/* right */}
                     <div className={item}>
                         <ul className={rightNav}>
-                            <li>
-                                <a href="#">
-                                    <BsSearch color="black" size={20} />
-                                </a>
-                            </li>
-
-                            <li className={favItems}>
-                                <a href="#">
-                                    <BsHeart color="black" className={icons} size={20} />
-                                </a>
-                                <span>3</span>
-                            </li>
                             <li className={shoppingBag}>
                                 <Link href="/shopping-card">
                                     <BsBag color="black" size={20} />
@@ -70,7 +58,7 @@ const Navbar = () => {
                                 <span>{quantity}</span>
                             </li>
                             <li className="">
-                                <a href="#">
+                                <a href="/admin/">
                                     <BiUser color="black" size={25} />
                                 </a>
                             </li>
